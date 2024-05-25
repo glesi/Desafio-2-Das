@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <RootNamespace>Cine_</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\Img\Avatar.jpg" />
+    <None Include="wwwroot\Img\avispa.jpg" />
+    <None Include="wwwroot\Img\bholaa.jpg" />
+    <None Include="wwwroot\Img\enders.jpg" />
+    <None Include="wwwroot\Img\FacebookBlanco.png" />
+    <None Include="wwwroot\Img\fondo.jpg" />
+    <None Include="wwwroot\Img\furiosa.jpg" />
+    <None Include="wwwroot\Img\gatsuer.png" />
+    <None Include="wwwroot\Img\halloween.jpg" />
+    <None Include="wwwroot\Img\InstagramBlanco.png" />
+    <None Include="wwwroot\Img\jumanji.jpg" />
+    <None Include="wwwroot\Img\LinkedinBlanco.png" />
+    <None Include="wwwroot\Img\septi.jpg" />
+    <None Include="wwwroot\Img\thor.jpg" />
+    <None Include="wwwroot\Img\TwitterBlanco.png" />
+    <None Include="wwwroot\Img\venom.jpg" />
+  </ItemGroup>
+
+</Project>
