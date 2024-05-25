@@ -1,0 +1,48 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Cine_</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/css.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Cine_.styles.css" asp-append-version="true" />
+</head>
+<body>
+    <header>
+        <nav>
+        <a href="#">Home</a>
+        <a href="#">Statistics</a>
+        <a href="#">About</a>
+        <a href="#">Search</a>
+        <span></span>
+    </nav>
+    </header>
+    <Img src=""/>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="social-icons-container">
+            <a href="#" class="social-icon"></a>
+            <a href="#" class="social-icon"></a>
+            <a href="#" class="social-icon"></a>
+            <a href="#" class="social-icon"></a>
+        </div>
+        <ul class="footer-menu-container">
+            <li class="menu-item">Home</li>
+            <li class="menu-item">Statistics</li>
+            <li class="menu-item">About</li>
+            <li class="menu-item">Search</li>
+        </ul>
+        <span class="copyright">&copy;2024, Cine+ Corp. All rights reserved.</span>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
