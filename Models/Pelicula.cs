@@ -16,5 +16,7 @@ namespace Desafio2_Cartelera_Cine.Models
         public DateTime FechaEstreno { get; set; }
         public string Sinopsis { get; set; }
         public byte[] Imagen { get; set; }
+        public string Categoria { get; set; }
+        public double PromedioCalificacion { get; set; }
     }
 }

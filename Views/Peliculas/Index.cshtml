@@ -1,33 +1,56 @@
-﻿@model IEnumerable<Desafio2_Cartelera_Cine.Models.Pelicula>
+﻿
+@model IEnumerable<Desafio2_Cartelera_Cine.Models.Pelicula>
 
-@{
-    ViewBag.Title = "Películas";
-}
+@{ ViewBag.Title = "Películas"; }
 
 <h2>Películas</h2>
+
+<!-- Formulario de búsqueda -->
+<form method="get" action="@Url.Action("Index", "Peliculas")">
+    <div class="form-group">
+        <label for="Titulo">Título</label>
+        <input type="text" name="titulo" class="form-control" value="@ViewBag.TituloFiltro" />
+    </div>
+    <div class="form-group">
+        <label for="Categoria">Categoría</label>
+        <input type="text" name="categoria" class="form-control" value="@ViewBag.CategoriaFiltro" />
+    </div>
+    <button type="submit" class="btn btn-primary">Buscar</button>
+</form>
 
 <table class="table">
     <thead>
         <tr>
+            <th>Imagen</th>
             <th>Título</th>
             <th>Género</th>
             <th>Director</th>
             <th>Fecha de Estreno</th>
+            <th>Categoría</th>
+            <th>Promedio Calificación</th>
+            <th></th>
             <th></th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
-                <td>@item.Titulo</td>
-                <td>@item.Genero</td>
-                <td>@item.Director</td>
-                <td>@item.FechaEstreno.ToShortDateString()</td>
-                <td>
-                    @Html.ActionLink("Detalles", "Details", new { id = item.IdPelicula })
-                </td>
-            </tr>
-        }
+<tr>
+    <td>
+        <img src="data:image/jpeg;base64,@Convert.ToBase64String(item.Imagen)" alt="@item.Titulo" style="width: 100px; height: auto;" />
+    </td>
+    <td>@item.Titulo</td>
+    <td>@item.Genero</td>
+    <td>@item.Director</td>
+    <td>@item.FechaEstreno.ToShortDateString()</td>
+    <td>@item.Categoria</td>
+    <td>@item.PromedioCalificacion.ToString("F1")</td>
+    <td>
+        @Html.ActionLink("Detalles", "Details", new { id = item.IdPelicula })
+    </td>
+    <td>
+        @Html.ActionLink("Calificar", "Create", "Calificaciones", new { id = item.IdPelicula }, new { @class = "btn btn-primary" })
+    </td>
+</tr>}
     </tbody>
 </table>

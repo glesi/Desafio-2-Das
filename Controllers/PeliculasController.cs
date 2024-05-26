@@ -12,9 +12,12 @@ namespace Desafio2_Cartelera_Cine.Controllers
         private readonly Conexion db = new Conexion();
 
         // GET: Peliculas
-        public ActionResult Index()
+        public ActionResult Index(string titulo, string categoria)
         {
-            List<Pelicula> peliculas = db.ObtenerPeliculas();
+            ViewBag.TituloFiltro = titulo;
+            ViewBag.CategoriaFiltro = categoria;
+
+            List<Pelicula> peliculas = db.ObtenerPeliculas(titulo, categoria);
             return View(peliculas);
         }
 

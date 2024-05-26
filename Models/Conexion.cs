@@ -52,15 +52,27 @@ namespace Desafio2_Cartelera_Cine.Models
         }
 
         //Obtenemos todas las peliculas de la tabla peliculas, sin filtros
-        public List<Pelicula> ObtenerPeliculas()
+        public List<Pelicula> ObtenerPeliculas(string titulo = null, string categoria = null)
         {
             List<Pelicula> peliculas = new List<Pelicula>();
 
             if (this.conectar())
             {
-                string query = "SELECT * FROM peliculas";
+                // Construir la consulta SQL con filtros opcionales
+                string query = @"
+                                SELECT p.id_pelicula, p.titulo, p.genero, p.director, p.fecha_estreno, p.sinopsis, p.imagen,
+                                       c.nombre_categoria
+                                FROM peliculas p
+                                LEFT JOIN Categorias c ON p.id_categoria = c.id_categoria
+                                WHERE (@Titulo IS NULL OR p.titulo LIKE '%' + @Titulo + '%')
+                                AND (@Categoria IS NULL OR c.nombre_categoria LIKE '%' + @Categoria + '%')";
+
                 SqlCommand cmd = new SqlCommand(query, this.conexionSQL);
+                cmd.Parameters.AddWithValue("@Titulo", string.IsNullOrEmpty(titulo) ? (object)DBNull.Value : titulo);
+                cmd.Parameters.AddWithValue("@Categoria", string.IsNullOrEmpty(categoria) ? (object)DBNull.Value : categoria);
                 SqlDataReader reader = cmd.ExecuteReader();
+
+                Dictionary<int, Pelicula> peliculaDict = new Dictionary<int, Pelicula>();
 
                 while (reader.Read())
                 {
@@ -72,10 +84,33 @@ namespace Desafio2_Cartelera_Cine.Models
                         Director = reader["director"].ToString(),
                         FechaEstreno = Convert.ToDateTime(reader["fecha_estreno"]),
                         Sinopsis = reader["sinopsis"].ToString(),
-                        Imagen = (byte[])reader["imagen"]
+                        Imagen = reader["imagen"] as byte[],
+                        Categoria = reader["nombre_categoria"].ToString()
                     };
                     peliculas.Add(pelicula);
+                    peliculaDict[pelicula.IdPelicula] = pelicula;
                 }
+                reader.Close();
+
+                // Segundo query: obtener el promedio de calificaciones y unirlas a los datos principales
+                query = @"
+                        SELECT id_pelicula, ISNULL(AVG(calificacion), 0) AS PromedioCalificacion
+                        FROM calificaciones
+                        GROUP BY id_pelicula";
+
+                cmd = new SqlCommand(query, this.conexionSQL);
+                reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    int idPelicula = Convert.ToInt32(reader["id_pelicula"]);
+                    if (peliculaDict.ContainsKey(idPelicula))
+                    {
+                        peliculaDict[idPelicula].PromedioCalificacion = Convert.ToDouble(reader["PromedioCalificacion"]);
+                    }
+                }
+                reader.Close();
+
                 this.desconectar();
             }
 
@@ -114,6 +149,26 @@ namespace Desafio2_Cartelera_Cine.Models
             return rankingPeliculas;
         }
 
+        public bool AgregarCalificacion(Calificacion calificacion)
+        {
+            if (this.conectar())
+            {
+                string query = "INSERT INTO calificaciones (id_pelicula, calificacion, usuario, comentario) VALUES (@IdPelicula, @Calificacion, @Usuario, @Comentario)";
+                SqlCommand cmd = new SqlCommand(query, this.conexionSQL);
+                cmd.Parameters.AddWithValue("@IdPelicula", calificacion.IdPelicula);
+                cmd.Parameters.AddWithValue("@Calificacion", calificacion.calificacion);
+                cmd.Parameters.AddWithValue("@Usuario", calificacion.Usuario);
+                cmd.Parameters.AddWithValue("@Comentario", calificacion.Comentario);
+
+                //se debe crear una validacion para ver que la nota no sean mayor a 5//
+
+
+                int result = cmd.ExecuteNonQuery();
+                this.desconectar();
+                return result > 0;
+            }
+            return false;
+        }
     }
 
     public class RankingPelicula

@@ -1,0 +1,44 @@
+﻿@model Desafio2_Cartelera_Cine.Models.Calificacion
+
+@{ ViewBag.Title = "Agregar Calificación"; }
+
+<h2>Agregar Calificación</h2>
+
+@using (Html.BeginForm("Create", "Calificaciones", FormMethod.Post))
+{
+@Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    <hr />
+    @Html.HiddenFor(model => model.IdPelicula)
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.calificacion, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.calificacion, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.calificacion, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Usuario, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Usuario, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Usuario, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Comentario, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextAreaFor(model => model.Comentario, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Comentario, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Agregar Calificación" class="btn btn-default" />
+        </div>
+    </div>
+</div>}

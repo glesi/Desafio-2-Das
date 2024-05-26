@@ -63,3 +63,4 @@ C:\Users\glesi\source\repos\Desafio2_Cartelera_Cine\obj\Debug\Desafio2_Cartelera
 C:\Users\glesi\source\repos\Desafio2_Cartelera_Cine\obj\Debug\Desafio2_Cartelera_Cine.csproj.CopyComplete
 C:\Users\glesi\source\repos\Desafio2_Cartelera_Cine\obj\Debug\Desafio2_Cartelera_Cine.dll
 C:\Users\glesi\source\repos\Desafio2_Cartelera_Cine\obj\Debug\Desafio2_Cartelera_Cine.pdb
+C:\Users\glesi\source\repos\Desafio2_Cartelera_Cine\obj\Debug\Desafio2_Cartelera_Cine.csproj.AssemblyReference.cache

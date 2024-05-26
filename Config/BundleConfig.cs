@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Web;
 using System.Web.Optimization;
 
-namespace Desafio2_Cartelera_Cine.Config
+namespace Desafio2_Cartelera_Cine
 {
     public class BundleConfig
     {
