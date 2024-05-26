@@ -16,7 +16,7 @@ namespace Desafio2_Cartelera_Cine
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+                defaults: new { controller = "Peliculas", action = "Index", id = UrlParameter.Optional }
             );
         }
     }

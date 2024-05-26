@@ -1,0 +1,33 @@
+﻿@model IEnumerable<Desafio2_Cartelera_Cine.Models.Pelicula>
+
+@{
+    ViewBag.Title = "Películas";
+}
+
+<h2>Películas</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Título</th>
+            <th>Género</th>
+            <th>Director</th>
+            <th>Fecha de Estreno</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Titulo</td>
+                <td>@item.Genero</td>
+                <td>@item.Director</td>
+                <td>@item.FechaEstreno.ToShortDateString()</td>
+                <td>
+                    @Html.ActionLink("Detalles", "Details", new { id = item.IdPelicula })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

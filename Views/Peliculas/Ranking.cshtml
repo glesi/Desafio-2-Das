@@ -1,0 +1,38 @@
+﻿
+@model IEnumerable<Desafio2_Cartelera_Cine.Models.RankingPelicula>
+
+@{ ViewBag.Title = "Ranking de Películas"; }
+
+<h2>Ranking de Películas</h2>
+
+<canvas id="rankingChart" style="width: 100%; height: 400px;"></canvas>
+
+@section scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var ctx = document.getElementById('rankingChart').getContext('2d');
+            var chart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: @Html.Raw(Json.Encode(Model.Select(m => m.Titulo))),
+                    datasets: [{
+                        label: 'Promedio de Calificaciones',
+                        data: @Html.Raw(Json.Encode(Model.Select(m => m.PromedioCalificacion))),
+                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+}
