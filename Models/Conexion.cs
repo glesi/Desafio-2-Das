@@ -156,7 +156,7 @@ namespace Desafio2_Cartelera_Cine.Models
                 string query = "INSERT INTO calificaciones (id_pelicula, calificacion, usuario, comentario) VALUES (@IdPelicula, @Calificacion, @Usuario, @Comentario)";
                 SqlCommand cmd = new SqlCommand(query, this.conexionSQL);
                 cmd.Parameters.AddWithValue("@IdPelicula", calificacion.IdPelicula);
-                cmd.Parameters.AddWithValue("@Calificacion", calificacion.calificacion);
+                cmd.Parameters.AddWithValue("@Calificacion", calificacion.Calificar);
                 cmd.Parameters.AddWithValue("@Usuario", calificacion.Usuario);
                 cmd.Parameters.AddWithValue("@Comentario", calificacion.Comentario);
 

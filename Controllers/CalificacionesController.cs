@@ -20,13 +20,7 @@ namespace Desafio2_Cartelera_Cine.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "IdPelicula,calificacion,Usuario,Comentario")] Calificacion calificacion)
         {
-            if (calificacion == null)
-            {
-                ModelState.AddModelError(string.Empty, "Error en la entrada de datos. Inténtelo de nuevo.");
-                return View(calificacion);
-            }
-
-            if (calificacion.calificacion < 1 || calificacion.calificacion > 5)
+            if (calificacion.Calificar < 1 || calificacion.Calificar > 5)
             {
                 ModelState.AddModelError("calificacion", "La calificación debe estar entre 1 y 5.");
             }
