@@ -1,56 +1,96 @@
-﻿
-@model IEnumerable<Desafio2_Cartelera_Cine.Models.Pelicula>
+﻿@model IEnumerable<Desafio2_Cartelera_Cine.Models.Pelicula>
 
 @{ ViewBag.Title = "Películas"; }
 
-<h2>Películas</h2>
+<style>
+    body {
+        background-color: #1a1a1a;
+        color: #fff;
+    }
 
-<!-- Formulario de búsqueda -->
-<form method="get" action="@Url.Action("Index", "Peliculas")">
-    <div class="form-group">
-        <label for="Titulo">Título</label>
-        <input type="text" name="titulo" class="form-control" value="@ViewBag.TituloFiltro" />
-    </div>
-    <div class="form-group">
-        <label for="Categoria">Categoría</label>
-        <input type="text" name="categoria" class="form-control" value="@ViewBag.CategoriaFiltro" />
-    </div>
-    <button type="submit" class="btn btn-primary">Buscar</button>
-</form>
+    .card {
+        background-color: #2a2a2a;
+        transition: transform 0.3s ease;
+    }
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>Imagen</th>
-            <th>Título</th>
-            <th>Género</th>
-            <th>Director</th>
-            <th>Fecha de Estreno</th>
-            <th>Categoría</th>
-            <th>Promedio Calificación</th>
-            <th></th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
+        .card:hover {
+            transform: scale(1.05);
+        }
+
+    .btn-primary {
+        background-color: #ff6f61;
+        border-color: #ff6f61;
+    }
+
+    .btn-secondary {
+        background-color: #88c0d0;
+        border-color: #88c0d0;
+    }
+
+    .rating {
+        display: inline-block;
+        font-size: 0;
+    }
+
+    .rating-star {
+        font-size: 24px;
+        color: #ccc;
+        cursor: pointer;
+    }
+
+        .rating-star.filled {
+            color: #ff6f61;
+        }
+</style>
+
+<div class="container my-5">
+    <h2 class="mb-4">Películas</h2>
+
+    <!-- Formulario de búsqueda -->
+    <form method="get" action="@Url.Action("Index", "Peliculas")" class="mb-5">
+        <div class="row g-3">
+            <div class="col-md-6">
+                <label for="Titulo" class="form-label">Título</label>
+                <input type="text" name="titulo" class="form-control form-control-lg" value="@ViewBag.TituloFiltro" placeholder="Buscar por título" />
+            </div>
+            <div class="col-md-6">
+                <label for="Categoria" class="form-label">Categoría</label>
+                <input type="text" name="categoria" class="form-control form-control-lg" value="@ViewBag.CategoriaFiltro" placeholder="Buscar por categoría" />
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary btn-lg mt-3">Buscar</button>
+    </form>
+
+    <div class="row row-cols-1 row-cols-md-3 g-4">
         @foreach (var item in Model)
         {
-<tr>
-    <td>
-        <img src="data:image/jpeg;base64,@Convert.ToBase64String(item.Imagen)" alt="@item.Titulo" style="width: 100px; height: auto;" />
-    </td>
-    <td>@item.Titulo</td>
-    <td>@item.Genero</td>
-    <td>@item.Director</td>
-    <td>@item.FechaEstreno.ToShortDateString()</td>
-    <td>@item.Categoria</td>
-    <td>@item.PromedioCalificacion.ToString("F1")</td>
-    <td>
-        @Html.ActionLink("Detalles", "Details", new { id = item.IdPelicula })
-    </td>
-    <td>
-        @Html.ActionLink("Calificar", "Create", "Calificaciones", new { id = item.IdPelicula }, new { @class = "btn btn-primary" })
-    </td>
-</tr>}
-    </tbody>
-</table>
+            <div class="col">
+                <div class="card h-100">
+                    <img src="data:image/jpeg;base64,@Convert.ToBase64String(item.Imagen)" class="card-img-top" alt="@item.Titulo">
+                    <div class="card-body">
+                        <h5 class="card-title">@item.Titulo</h5>
+                        <p class="card-text">
+                            <strong>Género:</strong> @item.Genero<br>
+                            <strong>Director:</strong> @item.Director<br>
+                            <strong>Fecha de Estreno:</strong> @item.FechaEstreno.ToShortDateString()<br>
+                            <strong>Categoría:</strong> @item.Categoria<br>
+                            <strong>Promedio Calificación:</strong>
+                            <div class="rating">
+                                @for (int i = 1; i <= 5; i++)
+                                {
+                                    <span class="rating-star @(i <= item.PromedioCalificacion ? "filled" : "")" data-rating="@i">&#9733;</span>
+                                }
+                            </div>
+                        </p>
+                    </div>
+                    <div class="card-footer">
+                        <div class="btn-group" role="group">
+                            @Html.ActionLink("Detalles", "Details", new { id = item.IdPelicula }, new { @class = "btn btn-primary" })
+                            @Html.ActionLink("Calificar", "Create", "Calificaciones", new { id = item.IdPelicula }, new { @class = "btn btn-secondary" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

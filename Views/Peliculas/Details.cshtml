@@ -4,39 +4,58 @@
     ViewBag.Title = "Detalles de la Película";
 }
 
-<h2>@Model.Titulo</h2>
+<style>
+    body {
+        background-color: #1a1a1a;
+        color: #fff;
+    }
 
-<div>
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Genero)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Genero)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Director)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Director)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.FechaEstreno)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.FechaEstreno)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Sinopsis)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Sinopsis)
-        </dd>
-        <dt>
-            Imagen
-        </dt>
-        <dd>
-            <img src="data:image;base64,@Convert.ToBase64String(Model.Imagen)" alt="Portada" />
-        </dd>
-    </dl>
+    .rating {
+        display: inline-block;
+        font-size: 0;
+    }
+
+    .rating-star {
+        font-size: 24px;
+        color: #ccc;
+    }
+
+        .rating-star.filled {
+            color: #ff6f61;
+        }
+</style>
+
+<div class="container my-5">
+    <h2 class="mb-4">@Model.Titulo</h2>
+
+    <div class="row">
+        <div class="col-md-4">
+            <img src="data:image;base64,@Convert.ToBase64String(Model.Imagen)" alt="Portada" class="img-fluid rounded" />
+        </div>
+        <div class="col-md-8">
+            <dl class="row">
+                <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Genero)</dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model => model.Genero)</dd>
+
+                <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Director)</dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model => model.Director)</dd>
+
+                <dt class="col-sm-3">@Html.DisplayNameFor(model => model.FechaEstreno)</dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model => model.FechaEstreno)</dd>
+
+                <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Sinopsis)</dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model => model.Sinopsis)</dd>
+
+                <dt class="col-sm-3">Calificación</dt>
+                <dd class="col-sm-9">
+                    <div class="rating">
+                        @for (int i = 1; i <= 5; i++)
+                        {
+                            <span class="rating-star @(i <= Model.PromedioCalificacion ? "filled" : "")">&#9733;</span>
+                        }
+                    </div>
+                </dd>
+            </dl>
+        </div>
+    </div>
 </div>
